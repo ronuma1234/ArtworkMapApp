@@ -14,6 +14,7 @@
 		EADBDB2E275FA3F100B7103E /* Assignment_2.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = EADBDB2C275FA3F100B7103E /* Assignment_2.xcdatamodeld */; };
 		EADBDB30275FA3F300B7103E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = EADBDB2F275FA3F300B7103E /* Assets.xcassets */; };
 		EADBDB33275FA3F300B7103E /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EADBDB31275FA3F300B7103E /* LaunchScreen.storyboard */; };
+		EADBDB3B275FAB9F00B7103E /* assignmentDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EADBDB3A275FAB9F00B7103E /* assignmentDataModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -26,6 +27,7 @@
 		EADBDB2F275FA3F300B7103E /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		EADBDB32275FA3F300B7103E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		EADBDB34275FA3F300B7103E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		EADBDB3A275FAB9F00B7103E /* assignmentDataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = assignmentDataModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -61,6 +63,7 @@
 				EADBDB23275FA3F100B7103E /* AppDelegate.swift */,
 				EADBDB25275FA3F100B7103E /* SceneDelegate.swift */,
 				EADBDB27275FA3F100B7103E /* ViewController.swift */,
+				EADBDB3A275FAB9F00B7103E /* assignmentDataModel.swift */,
 				EADBDB29275FA3F100B7103E /* Main.storyboard */,
 				EADBDB2F275FA3F300B7103E /* Assets.xcassets */,
 				EADBDB31275FA3F300B7103E /* LaunchScreen.storyboard */,
@@ -145,6 +148,7 @@
 				EADBDB24275FA3F100B7103E /* AppDelegate.swift in Sources */,
 				EADBDB26275FA3F100B7103E /* SceneDelegate.swift in Sources */,
 				EADBDB2E275FA3F100B7103E /* Assignment_2.xcdatamodeld in Sources */,
+				EADBDB3B275FAB9F00B7103E /* assignmentDataModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
