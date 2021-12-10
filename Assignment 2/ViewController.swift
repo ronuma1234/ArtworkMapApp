@@ -49,6 +49,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     var favoriteArt = [String : Bool]()
     var favArtManagedDict = [String : NSManagedObject]()
     var favArtIDArray = [String]()
+    var latestModified:Date? = nil
     
     
     
@@ -274,7 +275,23 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
             print("couldn't fetch results")
         }
         
-        if let url = URL(string: "https://cgi.csc.liv.ac.uk/~phil/Teaching/COMP228/artworksOnCampus/data.php?class=campusart") {
+        if let url = URL(string: "https://cgi.csc.liv.ac.uk/~phil/Teaching/COMP228/artworksOnCampus/data.php?class=campusart&lastModified=2017-12-01") {
+            
+            let urlString = url.absoluteString
+            if urlString.contains("&lastModified=") {
+                
+                let urlStringArr = urlString.components(separatedBy: "&lastModified=")
+                let dateFormatter = DateFormatter()
+                dateFormatter.dateFormat = "yyyy-MM-dd"
+                //print(dateFormatter.date(from: urlStringArr[1]))
+                if let dateFromURl = dateFormatter.date(from: urlStringArr[1]) {
+                    //print("hdibsdfbsdfbi")
+                    
+                    latestModified = dateFromURl
+                }
+                
+                //guard let lastModDate = Dat
+            }
               let session = URLSession.shared
               session.dataTask(with: url) { (data, response, err) in
                   guard let jsonData = data else {
@@ -378,9 +395,23 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     
     
     func updateCoreData() {
+        var mutableArtworks = reports?.campusart
         
+        var index = 0
         
-        for chosenArt in (reports?.campusart)! {
+        for artWork in (reports?.campusart)! {
+            let dateFormatter = DateFormatter()
+            dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
+            if let artDate = dateFormatter.date(from: artWork.lastModified) {
+                if artDate < latestModified ?? artDate {
+                    mutableArtworks?.remove(at: index)
+                }
+
+            }
+            index += 1
+        }
+        
+        for chosenArt in (mutableArtworks)! {
             let newArt = NSEntityDescription.insertNewObject(forEntityName: "ArtworkData", into: context) as! ArtworkData
                 
                 //let chosenArt = sections[currentBuilding].artworks?[currentPlace]
@@ -422,6 +453,42 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         //print(favoriteArt)
         
         var sortedArtworks = reports?.campusart
+        var index = 0
+        
+        for artWork in (reports?.campusart)! {
+            
+            let dateFormatter = DateFormatter()
+            dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
+            if let artDate = dateFormatter.date(from: artWork.lastModified) {
+                if artDate < latestModified ?? artDate {
+                    print(artDate)
+                    sortedArtworks?.remove(at: index)
+                }
+                else {
+                    print(artDate)
+                }
+
+            }
+            /*
+            if let url = URL(string: artWork.lastModified) {
+                let urlString = url.absoluteString
+                print("bibijdbuid")
+                if urlString.contains("&lastModified=") {
+                    let urlStringArr = urlString.components(separatedBy: "&lastModified=")
+                    let dateFormatter = DateFormatter()
+                    dateFormatter.dateFormat = "yyyy-MM-dd"
+                    
+                    if let dateFromURl = dateFormatter.date(from: urlStringArr[1]) {
+                        if dateFromURl < latestModified ?? dateFromURl {
+                            sortedArtworks?.remove(at: index)
+                        }
+                    }
+                }
+            } */
+            index += 1
+        }
+        
+        print(sortedArtworks?.count)
         
         sortedArtworks!.sort{ (first,second) in
             checkCoordDistance(first) < checkCoordDistance(second)
@@ -471,7 +538,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         
         }
         
-        print("here")
+        print(latestModified)
         
         myTable.reloadData()
     }
