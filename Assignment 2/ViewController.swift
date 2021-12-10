@@ -408,10 +408,18 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
                 }
 
             }
+            
             index += 1
         }
+        var mutableArtworks2 = mutableArtworks
         
-        for chosenArt in (mutableArtworks)! {
+        for i in 0...(mutableArtworks!.count-1) {
+            if mutableArtworks![i].enabled != "1" {
+                mutableArtworks2?.remove(at: i)
+            }
+        }
+        
+        for chosenArt in (mutableArtworks2)! {
             let newArt = NSEntityDescription.insertNewObject(forEntityName: "ArtworkData", into: context) as! ArtworkData
                 
                 //let chosenArt = sections[currentBuilding].artworks?[currentPlace]
@@ -468,6 +476,14 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
                     print(artDate)
                 }
 
+            }
+            
+            let mutableArtworks = sortedArtworks
+            
+            for i in 0...(mutableArtworks!.count-1) {
+                if mutableArtworks![i].enabled != "1" {
+                    sortedArtworks?.remove(at: i)
+                }
             }
             /*
             if let url = URL(string: artWork.lastModified) {
