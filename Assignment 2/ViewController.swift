@@ -116,24 +116,12 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
             
             do {
                 try context.save()
-                //favArtManagedDict[(sections[indexPath.section].artworks?[indexPath.row].id)!] = insertFavArt
             } catch {
                 print("Error saving FavArts")
             }
-
-            
-            
         }
         else {
             favoriteArt[(sections[indexPath.section].artworks?[indexPath.row].id)!] = false
-            
-            /*
-            for favArtID in favArtIDArray {
-                if favArtID == (sections[indexPath.section].artworks?[indexPath.row].id)! {
-                
-                    context.delete()
-                }
-            } */
             if favArtManagedDict[(sections[indexPath.section].artworks?[indexPath.row].id)!] != nil {
                 
                 context.delete(favArtManagedDict[(sections[indexPath.section].artworks?[indexPath.row].id)!]!)
@@ -146,12 +134,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
             }
         }
             
-            
-            
-        
-        
         myTable.reloadData()
-        
     }
     
     func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
@@ -194,12 +177,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
             var artWorkArray = [Artwork]()
             let results = try context.fetch(request)
             if results.count > 0 {
-                
-                //let artsToDelete = [NSManagedObject]()
                 for result in results as! [NSManagedObject] {
-                    //var art = Artwork
-                   
-                    
                     guard let artist = result.value(forKey: "artist") as? String else {return}
                     
                     guard let id = result.value(forKey: "id") as? String else {return}
@@ -219,30 +197,19 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
                     
                     guard let locationNotes = result.value(forKey: "locationNotes") as? String else {return}
                     
-                    guard let long = result.value(forKey: "long") as? String else {
-                        return
-                    }
+                    guard let long = result.value(forKey: "long") as? String else {return}
                     
-                    guard let thumbnail = result.value(forKey: "thumbnail") as? URL else {
-                        return
-                    }
+                    guard let thumbnail = result.value(forKey: "thumbnail") as? URL else {return}
                     
                     
-                    guard let title = result.value(forKey: "title") as? String else {
-                        return
-                    }
+                    guard let title = result.value(forKey: "title") as? String else {return}
                     
                     let type = result.value(forKey: "type") as? String ?? "no type"
                     
                     
-                    guard let yearOfWork = result.value(forKey: "yearOfWork") as? String else {
-                        return
-                    }
-                    print("hrtcfcgvgbgytfgvutfguuftvgvftucftfucftu")
+                    guard let yearOfWork = result.value(forKey: "yearOfWork") as? String else {return}
 
-                    guard let favArt = result.value(forKey: "favoriteArt") as? Bool else {
-                        return
-                    }
+                    guard let favArt = result.value(forKey: "favoriteArt") as? Bool else {return}
                                         
                     let art = Artwork(id: id, title: title, artist: artist, yearOfWork: yearOfWork, type: type, Information: information, lat: lat, long: long, location: location, locationNotes: locationNotes, ImagefileName: imageFileName, thumbnail: thumbnail, lastModified: lastModified, enabled: enabled)
                     
@@ -253,7 +220,6 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
                 }
                 let artOnCampus = ArtOnCampus(campusart: artWorkArray)
                 reports = artOnCampus
-                print(reports?.campusart.count)
                 
                 for result in results as! [NSManagedObject] {
                     context.delete(result)
@@ -268,8 +234,6 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
                     self.downLoadImage()
                     self.updateTheTable()
                 }
-                //downLoadImage()
-                //updateTheTable()
             }
         } catch {
             print("couldn't fetch results")
@@ -283,14 +247,9 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
                 let urlStringArr = urlString.components(separatedBy: "&lastModified=")
                 let dateFormatter = DateFormatter()
                 dateFormatter.dateFormat = "yyyy-MM-dd"
-                //print(dateFormatter.date(from: urlStringArr[1]))
                 if let dateFromURl = dateFormatter.date(from: urlStringArr[1]) {
-                    //print("hdibsdfbsdfbi")
-                    
                     latestModified = dateFromURl
                 }
-                
-                //guard let lastModDate = Dat
             }
               let session = URLSession.shared
               session.dataTask(with: url) { (data, response, err) in
@@ -422,8 +381,6 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         for chosenArt in (mutableArtworks2)! {
             let newArt = NSEntityDescription.insertNewObject(forEntityName: "ArtworkData", into: context) as! ArtworkData
                 
-                //let chosenArt = sections[currentBuilding].artworks?[currentPlace]
-                
             newArt.artist = chosenArt.artist
             newArt.id = chosenArt.id
             newArt.enabled = chosenArt.enabled
@@ -440,7 +397,6 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
             newArt.yearOfWork = chosenArt.yearOfWork
             if favoriteArt[chosenArt.id] != nil {
                 newArt.favoriteArt = favoriteArt[chosenArt.id]!
-                print(newArt.favoriteArt)
             }
             else {
                 newArt.favoriteArt = false
@@ -448,7 +404,6 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
                 
             do {
                 try context.save()
-                print("Saved")
             } catch {
                 print("there was an error")
             }
@@ -472,10 +427,6 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
                     print(artDate)
                     sortedArtworks?.remove(at: index)
                 }
-                else {
-                    print(artDate)
-                }
-
             }
             
             let mutableArtworks = sortedArtworks
@@ -485,26 +436,8 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
                     sortedArtworks?.remove(at: i)
                 }
             }
-            /*
-            if let url = URL(string: artWork.lastModified) {
-                let urlString = url.absoluteString
-                print("bibijdbuid")
-                if urlString.contains("&lastModified=") {
-                    let urlStringArr = urlString.components(separatedBy: "&lastModified=")
-                    let dateFormatter = DateFormatter()
-                    dateFormatter.dateFormat = "yyyy-MM-dd"
-                    
-                    if let dateFromURl = dateFormatter.date(from: urlStringArr[1]) {
-                        if dateFromURl < latestModified ?? dateFromURl {
-                            sortedArtworks?.remove(at: index)
-                        }
-                    }
-                }
-            } */
             index += 1
         }
-        
-        print(sortedArtworks?.count)
         
         sortedArtworks!.sort{ (first,second) in
             checkCoordDistance(first) < checkCoordDistance(second)
@@ -538,8 +471,6 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
                 }
             
             }
-            
-            
             guard (sections.count) > currentBuilding else { return }
             guard let lat = sections[currentBuilding].artworks?[0].lat else { return }
             guard let lon = sections[currentBuilding].artworks?[0].long else { return }
@@ -553,38 +484,14 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
             self.map.addAnnotation(annotation)
         
         }
-        
-        print(latestModified)
-        
         myTable.reloadData()
     }
     
     func sortTheTable() {
-        /*
-        let sortedArtworks =
-        
-        sortedArtworks!.sort{ (first,second) in
-            checkCoordDistance(first) < checkCoordDistance(second)
-        }
-        
-        let groups = Dictionary(grouping: sortedArtworks!) {
-            (building) -> String in
-            return building.locationNotes
-        }
-        
-                
-        self.sections = groups.map { (key, values) in
-            return ArtSection(building: key, artworks: values)
-        }
-        */
-        
         self.sections.sort { (first, second) in
             checkCoordDistance(first.artworks![0]) < checkCoordDistance(second.artworks![0])
         }
-        
         myTable.reloadData()
-        
-        
     }
     
     func downLoadImage() {
@@ -600,9 +507,6 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
                 }
             }
         }
-        
     }
-
-
 }
 
