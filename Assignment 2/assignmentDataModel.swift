@@ -27,3 +27,4 @@ struct Artwork : Decodable {
 struct ArtOnCampus: Decodable {
     let campusart: [Artwork]
 }
+
