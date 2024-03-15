@@ -88,7 +88,6 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
             }
             else {
                 myCell.starImageView.image = UIImage(systemName: "star")
-                //print("dbfggwfwef")
             }
         }
         
@@ -125,7 +124,6 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
             if favArtManagedDict[(sections[indexPath.section].artworks?[indexPath.row].id)!] != nil {
                 
                 context.delete(favArtManagedDict[(sections[indexPath.section].artworks?[indexPath.row].id)!]!)
-                print(context.deletedObjects)
                 do {
                     try context.save()
                 } catch {
